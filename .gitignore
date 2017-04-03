@@ -6,3 +6,4 @@ Python/
 *.csv
 *.sql
 Data/
+*.pyc
