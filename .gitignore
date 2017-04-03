@@ -1,0 +1,8 @@
+Python/
+*.exe
+.env
+.ipynb_checkpoints/
+*.pickle
+*.csv
+*.sql
+Data/
