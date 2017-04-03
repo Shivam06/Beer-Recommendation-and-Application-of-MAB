@@ -1,2 +1,2 @@
-# Beer-Recommendation-and-Application-of-MAB
-Minor Project I am working on during 6th Semester.
+# Recommendation-System
+Project I am working on for Minors, 6th Sem, 2017.
