@@ -1,6 +1,7 @@
 import numpy as np 
 import cPickle as pickle 
 
+
 with open(r"C:\Users\SHIVAM MAHAJAN\Desktop\Github\Recommendation-System\Data\beer_profile_hash.pickle", "rb") as handle:
 	hash_beers = pickle.load(handle)
 	hash_profiles = pickle.load(handle)
@@ -66,6 +67,6 @@ def display_arm(idx):
 		print "KNN"
 
 if __name__ == "__main__":
-	simulator()"""
+	simulator() """
 
 
