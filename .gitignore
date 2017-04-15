@@ -7,3 +7,5 @@ Python/
 *.sql
 Data/
 *.pyc
+Research Papers/
+rec_env/
