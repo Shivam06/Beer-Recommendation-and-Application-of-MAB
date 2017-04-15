@@ -13,15 +13,15 @@ def categorical_draw(probs):
 			return i
 
 class Softmax:
-	def __init__(self, counts, values, temperature, arms):
+	def __init__(self, counts, values, temperature):
 		self.temperature = temperature
 		self.counts = counts
 		self.values = values
-		self.num_arms = len(arms)
+		self.num_arms = len(counts)
 
 	def initialize(self, n_arms):
-		self.counts = [0.0 for a in range(len(arms))]
-		self.values = [0.0 for a in range(len(arms))]
+		self.counts = [0.0 for a in range(n_arms)]
+		self.values = [0.0 for a in range(n_arms)]
 		self.num_arms = n_arms
 
 	def select_arm(self):
