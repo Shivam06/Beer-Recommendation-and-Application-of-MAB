@@ -2,7 +2,7 @@ import numpy as np
 import cPickle as pickle 
 
 
-with open(r"C:\Users\SHIVAM MAHAJAN\Desktop\Github\Recommendation-System\Data\beer_profile_hash.pickle", "rb") as handle:
+with open(r"E:\SHIVAM MAHAJAN\Desktop\Github\Beer-Recommendation-and-Application-of-MAB\Data\beer_profile_hash.pickle", "rb") as handle:
 	hash_beers = pickle.load(handle)
 	hash_profiles = pickle.load(handle)
 	hash_beers_inv = pickle.load(handle)
