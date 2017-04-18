@@ -1,3 +1,16 @@
+.intro {
+	align-text: center;
+	background-color: orange;
+}
+
+h2 {
+	color: blue;
+}
+
 .hidden {
 	visibility: hidden;
 }
+
+span {
+	color : red;
+} 

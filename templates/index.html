@@ -6,30 +6,62 @@
         <link href="{{ css_url }}" rel="stylesheet" type="text/css"></link>  
     </head>
 	<body>
-		<form method = "post">
-			<div>
-				<label for = "beer">Choose your favourite beer!</label>
-				<input type="text" name="beer"/>
-			</div>
-		</form>
-		<div class = 'hidden'>
-			<div>
-				<h2>Recommendations for you are :</h2>
-			</div>
-			<table>
-				<tbody>
-					{% for beer in rec_beers %}
-					<tr>
-						<td>{{ beer }}</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
+		<div class = 'header' background-color: orange>
+			<div class = 'intro'>
 			<br/>
-			<h3>Current Arm is {{ arm }}. </h3>
-			{% for score in values %}
-			<h3>{{ score }}</h3>
-			{% endfor %}
+				<h2 color= blue><strong>Hi {{ user }}. Hope you have a great day!</strong></h2>
+			</div>
+			<br/>
+			<form method = "post">
+				<div>
+					<label for = "beer" color = 'blue'><strong>Choose a beer you would like to try!</strong>	</label>
+					<input type="text" name="beer"/>
+					<br/>
+				</div>
+			</form>
+		</div>
+		<br/>
+		<div class = 'hidden'>
+
+			<div class = 'recommendations'>
+				<h2><strong>Top 10 Recommendations for you corresponding to <i><u>{{ arm }}</u></i> arm are: </strong></h2>
+				<ol>
+					{% for beer in rec_beers %}	
+						<li>{{ beer }}</li>
+					{% endfor %}
+				</ol>
+			</div>
+
+			<div class = 'profile'>
+				<h2><strong>Your liked beers are:</strong></h2>
+				<ul>
+					{% for beer in favs %}
+					<li>{{beer}}</li>
+					{% endfor %}
+				</ul>
+			</div>
+			
+			<div class = 'mab_info'>
+				<h2>Epsilon Greedy Algo Information</h2>
+				<table class="table" border="1">
+	                <thead>
+	                    <tr>
+	                        <th>Arm_Name</th>
+	                        <th>Count</th>
+	                        <th>Value</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                {% for arm in arms %}
+	                    <tr>
+	                        <td>{{ arm.name }}</td>
+	                        <td>{{ arm.count }}</td>
+	                        <td>{{ arm.value }}</td>
+	                    </tr>
+	                {% endfor %}
+	                </tbody>
+	            </table>
+	        </div>
 		</div>
 	</body>
 </html>
