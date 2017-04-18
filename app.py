@@ -30,43 +30,68 @@ algo = EpsilonGreedy([], [], 0.2)
 algo.initialize(3)
 arms = [JacArm(), CossineArm(), KNNarm()]
 arr = []
+favs = []
 chosen_arm = 0	
+
+
+class person:
+	def __init__(self):
+		self.arr = []
+		self.favs = []
+		self.flag = 0
+shivam = person()
+rakshit = person()
+rahul = person()
+
+my_dict = {}
+my_dict["shivam"] = shivam
+my_dict["rakshit"] = rakshit
+my_dict["rahul"] = rahul
 
 app = Flask(__name__)
 wsgi_app = app.wsgi_app
-
-@app.route('/', methods = ['GET', 'POST'])
-def index():	
+# After logging in. After registering I will add the user in my_dict
+@app.route('/user/<username>', methods = ['GET', 'POST'])
+def recommend(username):	
 	if request.method == 'GET':
-		global flag
-		global chosen_arm
-		global arr
-		flag = 0
-		css_url = url_for('static', filename='main.css')
-		return render_template('index.html', css_url = css_url)
+		user = my_dict[username]
+		if user.flag == 0:
+			global chosen_arm
+			css_url = url_for('static', filename='main.css')
+			return render_template('index.html', user = username, css_url = css_url)
+		else:
+			css_url = url_for('static', filename='combined.css')
+			return render_template('index.html', user = username, rec_beers = user.arr, 
+					values = algo.values, favs = user.favs, css_url = css_url, arms = arms, arm = arms[chosen_arm].name)
 
 	elif request.method == 'POST':
+		user = my_dict[username]
+		css_url = url_for('static', filename='combined.css')
 		beer_input = request.form['beer']
-		if flag == 0:
+		if beer_input not in user.favs:
+			user.favs.append(beer_input)
+		if user.flag == 0:
 			chosen_arm = algo.select_arm()
 			try:
-				arr = arms[chosen_arm].recommend(beer_input, 10)
+				user.arr = arms[chosen_arm].recommend(user.favs, 10)
 			except:
 				return "No such Beer Available."
-			flag = 1
+			user.flag = 1
 		else:
-			rank = find_rank(arr, beer_input) # Define the function
+			rank = find_rank(user.arr, beer_input) # Define the function
 			if rank:
 				score = arms[chosen_arm].draw(rank)
 			else:
 				score = 0
 			algo.update(chosen_arm, score)
+			arms[chosen_arm].count = algo.counts[chosen_arm]
+			arms[chosen_arm].value = algo.values[chosen_arm]
 			chosen_arm = algo.select_arm()
 			try:
-				arr = arms[chosen_arm].recommend(beer_input, 10)
+				user.arr = arms[chosen_arm].recommend(user.favs, 10)
 			except:
 				return "No such Beer Available."
-		return render_template('index.html', rec_beers = arr, arm = display_arm(chosen_arm), values = algo.values)
+		return render_template('index.html', user = username, rec_beers = user.arr, arms = arms, arm = arms[chosen_arm].name ,values = algo.values, favs = user.favs, css_url = css_url)
 
 		
 
