@@ -13,13 +13,19 @@ class CossineArm:
 		with open(r"E:\SHIVAM MAHAJAN\Desktop\Github\Beer-Recommendation-and-Application-of-MAB\Data\cossine_arm.pickle", 'rb') as handle:
 			self.sim = np.array(pickle.load(handle))
 		print type(self.sim)
+		self.name = 'Cossine'
+		self.value = 0
+		self.count = 0
 
-	def recommend(self, input_beer, k = 10):
+	def recommend(self, input_beers, k = 10):
 		self.k = k
-		beer_no = hash_beers[input_beer]
-		arr = self.sim[beer_no, :]
-		top_k_beers = [hash_beers_inv[a] for a in np.argsort(-arr)[1:k+1]]
+		input_beers = np.array(input_beers)
+		n = len(input_beers)
+		beer_nos = np.array([hash_beers[beer] for beer in input_beers])
+		arr = np.sum(self.sim[beer_nos, :], axis = 0)/float(n)
+		top_k_beers = np.array([hash_beers_inv[a] for a in np.argsort(-arr)[:k+n]])
 		#top_k_beers_sno = [a for a in np.argsort(-arr)[1:k+1]]
+		top_k_beers = np.array([beer for beer in top_k_beers if beer not in input_beers])[:k]
 		return top_k_beers
 
 	def draw(self, input):
@@ -28,8 +34,10 @@ class CossineArm:
 
 if __name__ == "__main__":
 	arm = CossineArm()
+	beers = ["60 Minute IPA", "Stone Ruination IPA"]
 	input_beer = raw_input("Enter a beer you like!")
-	arr = arm.recommend(input_beer, 10)
+	beers.append(input_beer)
+	arr = arm.recommend(beers, 10)
 	for i in range(len(arr)):
 		print str(i+1) + ") " + arr[i]
 	print str(arm.k + 1) + ") " + "None"
