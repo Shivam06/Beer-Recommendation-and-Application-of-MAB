@@ -21,9 +21,9 @@ class KNNarm:
 		n = len(input_beers)
 		beer_nos = np.array([hash_beers[beer] for beer in input_beers])
 		arr = np.sum(self.sim[beer_nos, :], axis = 0)/float(n)
-		top_k_beers = np.array([hash_beers_inv[a] for a in np.argsort(arr)[:k+n]])
-		top_k_beers = np.array([beer for beer in top_k_beers if beer not in input_beers])[:k]
-		return top_k_beers
+		top_beers = np.array([hash_beers_inv[a] for a in np.argsort(arr)[:k+n]])
+		top_beers = np.array([beer for beer in top_beers if hash_beers[beer] not in beer_nos])
+		return top_k_beers[:k]
 
 	def draw(self, input_rank):
 		return self.k - input_rank + 1
