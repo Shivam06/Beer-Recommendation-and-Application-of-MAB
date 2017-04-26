@@ -5,7 +5,7 @@ Python/
 *.pickle
 *.csv
 *.sql
-Data/
+Data/beer_reviews/
 *.pyc
 Research Papers/
 rec_env/

@@ -6,15 +6,14 @@
         <link href="{{ css_url }}" rel="stylesheet" type="text/css"></link>  
     </head>
 	<body>
-		<div class = 'header' background-color: orange>
+		<div class = 'header'>
 			<div class = 'intro'>
-			<br/>
-				<h2 color= blue><strong>Hi {{ user }}. Hope you have a great day!</strong></h2>
+				<h2><strong>Hi <span><i>{{ user }}</i></span>. Hope you have a great day!</strong></h2>
 			</div>
 			<br/>
 			<form method = "post">
 				<div>
-					<label for = "beer" color = 'blue'><strong>Choose a beer you would like to try!</strong>	</label>
+					<label for = "beer" class ='form'><strong>Choose a beer you would like to try!</strong></label>
 					<input type="text" name="beer"/>
 					<br/>
 				</div>
