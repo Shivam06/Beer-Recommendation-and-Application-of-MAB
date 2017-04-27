@@ -1,16 +1,18 @@
-import numpy as np 
+import numpy as np
 import cPickle as pickle
 from MAB.Algo.EpsilonGreedy import EpsilonGreedy
 from MAB.Arms.CossineArm import CossineArm
 from MAB.Arms.JacArm import JacArm
 from MAB.Arms.KNNarm import KNNarm
+import os
 
-with open(r"E:\SHIVAM MAHAJAN\Desktop\Github\Beer-Recommendation-and-Application-of-MAB\Data\beer_profile_hash.pickle", "rb") as handle:
+
+with open(filedir+'beer_profile_hash.pickle', "rb") as handle:
 	hash_beers = pickle.load(handle)
 	hash_profiles = pickle.load(handle)
 	hash_beers_inv = pickle.load(handle)
 	hash_profiles_inv = pickle.load(handle)
-	
+
 def simulator():
 	favs = []
 	algo = EpsilonGreedy([], [], 0.2)
@@ -44,7 +46,7 @@ def simulator():
 		algo.update(arm_idx, score)
 		print "Scores of different arms is" + str(algo.values)
 		print "Counts of differnt arms is " + str(algo.counts)
-		print "\n"	
+		print "\n"
 
 def display_arm(idx):
 	if idx == 0:

@@ -1,8 +1,11 @@
-import numpy as np 
+import numpy as np
 import pandas as pd
 import cPickle as pickle
+import os
 
-with open(r"E:\SHIVAM MAHAJAN\Desktop\Github\Beer-Recommendation-and-Application-of-MAB\Data\beer_profile_hash.pickle", "rb") as handle:
+filedir = os.path.dirname(os.path.realpath('__file__'))+'/Data/'
+
+with open(filedir+'beer_profile_hash.pickle', "rb") as handle:
 	hash_beers = pickle.load(handle)
 	hash_profiles = pickle.load(handle)
 	hash_beers_inv = pickle.load(handle)
@@ -10,7 +13,7 @@ with open(r"E:\SHIVAM MAHAJAN\Desktop\Github\Beer-Recommendation-and-Application
 
 class JacArm:
 	def __init__(self):
-		with open(r"E:\SHIVAM MAHAJAN\Desktop\Github\Beer-Recommendation-and-Application-of-MAB\Data\jac_arm.pickle", 'rb') as handle:
+		with open(filedir+'jac_arm.pickle', 'rb') as handle:
 			self.sim = np.array(pickle.load(handle))
 		self.name = 'Jaccardian'
 		self.value = 0

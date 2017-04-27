@@ -1,7 +1,10 @@
-import numpy as np 
+import numpy as np
 from MAB.Algo.EpsilonGreedy import EpsilonGreedy
 from MAB.Arms.BernauliArm import BernauliArm
 import cPickle as pickle
+import os
+
+filedir = os.path.dirname(os.path.realpath('__file__'))+'/Data/'
 
 def test(algo, arms, num_sims, horizons, best_arm):
 	# We want convergence with probability of best arms, Avg Reward per trial, Avg Cumulative Reward per trial.
@@ -22,7 +25,7 @@ def test(algo, arms, num_sims, horizons, best_arm):
 
 	return [arm_chosen, reward_obtained, cum_reward, best_arm]
 
-if __name__ == "__main__":	
+if __name__ == "__main__":
 	p_values = [0.1,0.1,0.1,0.9,0.1]
 	np.random.shuffle(p_values)
 	best_arm = np.argmax(p_values)
@@ -31,12 +34,12 @@ if __name__ == "__main__":
 		algo = EpsilonGreedy([],[], 0.1)
 		ans = test(algo, arms, 5000, 250, best_arm)
 		pickle.dump(ans, handle)"""
-	with open(r"E:\SHIVAM MAHAJAN\Desktop\Github\Beer-Recommendation-and-Application-of-MAB\Data\convergence.pickle","wb") as handle:
+	with open(filedir+'convergence.pickle',"wb") as handle:
 		for e in [0.1, 0.2, 0.3, 0.4, 0.5]:
 			algo = EpsilonGreedy([],[], e)
 			ans = test(algo, arms, 5000, 250, best_arm)
 			pickle.dump(ans, handle)
 
 
-   		
-   	 	
+
+

@@ -1,8 +1,12 @@
-import numpy as np 
+import numpy as np
 import pandas as pandas
-import cPickle as pickle 
+import cPickle as pickle
+import os
 
-with open(r"E:\SHIVAM MAHAJAN\Desktop\Github\Beer-Recommendation-and-Application-of-MAB\Data\beer_profile_hash.pickle", "rb") as handle:
+filedir = os.path.dirname(os.path.realpath('__file__'))+'/Data/'
+
+
+with open(filedir+'beer_profile_hash.pickle', "rb") as handle:
 	hash_beers = pickle.load(handle)
 	hash_profiles = pickle.load(handle)
 	hash_beers_inv = pickle.load(handle)
@@ -10,12 +14,12 @@ with open(r"E:\SHIVAM MAHAJAN\Desktop\Github\Beer-Recommendation-and-Application
 
 class KNNarm:
 	def __init__(self):
-		with open(r"E:\SHIVAM MAHAJAN\Desktop\Github\Beer-Recommendation-and-Application-of-MAB\Data\knn_arm.pickle", 'rb') as handle:
+		with open(filedir+'knn_arm.pickle', 'rb') as handle:
 			self.sim = np.array(pickle.load(handle))
 		self.name = 'KNN'
 		self.value = 0
 		self.count = 0
-		
+
 	def recommend(self, input_beers, k = 10):
 		self.k = 10
 		n = len(input_beers)
@@ -39,4 +43,4 @@ if __name__ == "__main__":
 		print str(i+1) + ") " + arr[i]
 	print str(arm.k + 1) + ") " + "None"
 	input_rank = raw_input("Enter the Beer you would like to have ?")
-	print "Score obtained is " + str(arm.draw(int(input_rank)))	
+	print "Score obtained is " + str(arm.draw(int(input_rank)))

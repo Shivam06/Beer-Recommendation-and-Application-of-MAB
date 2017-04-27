@@ -1,12 +1,12 @@
 from flask import Flask, render_template, request, url_for
-import numpy as np 
+import numpy as np
 import cPickle as pickle
 from MAB.Algo.EpsilonGreedy import EpsilonGreedy
 from MAB.Arms.CossineArm import CossineArm
 from MAB.Arms.JacArm import JacArm
 from MAB.Arms.KNNarm import KNNarm
 
-with open(r"E:\SHIVAM MAHAJAN\Desktop\Github\Beer-Recommendation-and-Application-of-MAB\Data\beer_profile_hash.pickle", "rb") as handle:
+with open('Data/beer_profile_hash.pickle', "rb") as handle:
 	hash_beers = pickle.load(handle)
 	hash_profiles = pickle.load(handle)
 	hash_beers_inv = pickle.load(handle)
@@ -16,7 +16,7 @@ def display_arm(idx):
 	if idx == 0:
 		return "Jaccardian"
 	elif idx == 1:
-		return "Cossine"	
+		return "Cossine"
 	elif idx == 2:
 		return "KNN"
 
@@ -31,7 +31,7 @@ algo.initialize(3)
 arms = [JacArm(), CossineArm(), KNNarm()]
 arr = []
 favs = []
-chosen_arm = 0	
+chosen_arm = 0
 
 
 class person:
@@ -52,7 +52,7 @@ app = Flask(__name__)
 wsgi_app = app.wsgi_app
 # After logging in. After registering I will add the user in my_dict
 @app.route('/user/<username>', methods = ['GET', 'POST'])
-def recommend(username):	
+def recommend(username):
 	if request.method == 'GET':
 		user = my_dict[username]
 		if user.flag == 0:
@@ -61,7 +61,7 @@ def recommend(username):
 			return render_template('index.html', user = username, css_url = css_url)
 		else:
 			css_url = url_for('static', filename='combined.css')
-			return render_template('index.html', user = username, rec_beers = user.arr, 
+			return render_template('index.html', user = username, rec_beers = user.arr,
 					values = algo.values, favs = user.favs, css_url = css_url, arms = arms, arm = arms[chosen_arm].name)
 
 	elif request.method == 'POST':
@@ -93,7 +93,7 @@ def recommend(username):
 				return "No such Beer Available."
 		return render_template('index.html', user = username, rec_beers = user.arr, arms = arms, arm = arms[chosen_arm].name ,values = algo.values, favs = user.favs, css_url = css_url)
 
-		
+
 
 if __name__ == "__main__":
-	app.run()	
+	app.run()

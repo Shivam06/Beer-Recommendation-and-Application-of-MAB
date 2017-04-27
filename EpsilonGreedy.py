@@ -1,7 +1,11 @@
-import numpy as np 
-import cPickle as pickle 
+import numpy as np
+import cPickle as pickle
+import os
 
-with open(r"C:\Users\SHIVAM MAHAJAN\Desktop\Github\Recommendation-System\Data\beer_profile_hash.pickle", "rb") as handle:
+filedir = os.path.dirname(os.path.realpath('__file__'))+'/Data/'
+
+
+with open(filedir+'beer_profile_hash.pickle', "rb") as handle:
 	hash_beers = pickle.load(handle)
 	hash_profiles = pickle.load(handle)
 	hash_beers_inv = pickle.load(handle)
@@ -11,7 +15,7 @@ class EpsilonGreedy:
 	def __init__(self, counts, values, e):
 		self.epsilon = e
 		self.counts = counts
-		self.values = values	
+		self.values = values
 		self.n_arms = len(counts)
 
 	def initialize(self, arms):
@@ -55,7 +59,7 @@ class EpsilonGreedy:
 			beer_input = raw_input("Chose your favourite beer!")
 		algo.update(arm_idx, score)
 		print algo.values
-		print algo.counts	
+		print algo.counts
 
 def display_arm(idx):
 	if idx == 0:
