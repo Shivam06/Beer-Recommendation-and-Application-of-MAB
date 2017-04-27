@@ -2,66 +2,28 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width">
-        <title>Hello Flask</title>
-        <link href="{{ css_url }}" rel="stylesheet" type="text/css"></link>  
+        <title>Flask Beer Recommender</title>
+        <link href="{{ css_url }}" rel="stylesheet" type="text/css"></link>
     </head>
-	<body>
-		<div class = 'header'>
-			<div class = 'intro'>
-				<h2><strong>Hi <span><i>{{ user }}</i></span>. Hope you have a great day!</strong></h2>
-			</div>
-			<br/>
-			<form method = "post">
-				<div>
-					<label for = "beer" class ='form'><strong>Choose a beer you would like to try!</strong></label>
-					<input type="text" name="beer"/>
-					<br/>
-				</div>
-			</form>
-		</div>
-		<br/>
-		<div class = 'hidden'>
-
-			<div class = 'recommendations'>
-				<h2><strong>Top 10 Recommendations for you corresponding to <i><u>{{ arm }}</u></i> arm are: </strong></h2>
-				<ol>
-					{% for beer in rec_beers %}	
-						<li>{{ beer }}</li>
-					{% endfor %}
-				</ol>
-			</div>
-
-			<div class = 'profile'>
-				<h2><strong>Your liked beers are:</strong></h2>
-				<ul>
-					{% for beer in favs %}
-					<li>{{beer}}</li>
-					{% endfor %}
-				</ul>
-			</div>
-			
-			<div class = 'mab_info'>
-				<h2>Epsilon Greedy Algo Information</h2>
-				<table class="table" border="1">
-	                <thead>
-	                    <tr>
-	                        <th>Arm_Name</th>
-	                        <th>Count</th>
-	                        <th>Value</th>
-	                    </tr>
-	                </thead>
-	                <tbody>
-	                {% for arm in arms %}
-	                    <tr>
-	                        <td>{{ arm.name }}</td>
-	                        <td>{{ arm.count }}</td>
-	                        <td>{{ arm.value }}</td>
-	                    </tr>
-	                {% endfor %}
-	                </tbody>
-	            </table>
-	        </div>
-		</div>
-	</body>
+    <body>
+        <div class="container">
+            <form id="rec">
+                <select id="beers" data-placeholder="Choose some beers..." class="chosen-select" multiple>
+                </select>
+                <button class="btn" type="submit">Go!</button>
+            </form>
+            <section class="results">
+                <p class="lead">Top Ten Recommended Beers</p>
+                <figure class="visualization row">
+                    <div class="col-sm-6 col-1"></div>
+                    <div class="col-sm-6 col-2"></div>
+                </figure>
+            </section>
+            <pre id="result" class="language-javascript"><code class="language-javascript"></code></pre>
+        </div>
+        <script src="{{ jquery_url }}"></script>
+        <script src="{{ highlight_url }}"></script>
+        <script src="{{ beers_url }}"></script>
+        <script src="{{ js_url }}"></script>
+    </body>
 </html>
-
