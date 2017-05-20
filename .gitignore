@@ -2,10 +2,8 @@ Python/
 *.exe
 .env
 .ipynb_checkpoints/
-*.pickle
 *.csv
 *.sql
-Data/beer_reviews/
 *.pyc
 Research Papers/
 rec_env/
