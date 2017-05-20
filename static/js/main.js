@@ -33,7 +33,7 @@ var recommendation = {
 
         $.ajax({
             type: "POST",
-            url: "http://127.0.0.1:5000/user/rahul",
+            url: document.location.href,
             data: JSON.stringify(payload),
             contentType: "application/json",
             success: function(d) {
