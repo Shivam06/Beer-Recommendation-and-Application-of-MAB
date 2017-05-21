@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width">
+        <title>Flask Beer Recommender</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+        <!-- <link href="{{ css_url }}" rel="stylesheet" type="text/css"></link> -->
+    <style>
+ul.nav {
+    width: 80%
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li.nav {
+    float: right;
+}
+
+li.nav a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li.nav a:hover {
+    background-color: #111;
+}
+</style>
+    </head>
+    <body>
+<ul class="nav">
+  <ul class= "nav" class="container">
+  <li class="nav"><a class="active" href="{{train_url}}">Train</a></li>
+  <li class="nav"><a class="active" href="{{user_url}}">User Data</a></li>
+  </ul>
+
+</ul>
+        <div class="container" style="width: 60%">
+<!--             <form id="rec">
+                <select id="beers" data-placeholder="Choose some beers..." class="chosen-select" multiple>
+                </select>
+                <button class="btn" onsubmit="recommendation.submit()">Go!</button>
+            </form>
+            <section class="results">
+                <p class="lead">Top Ten Recommended Beers</p>
+                <figure class="visualization row">
+                    <div class="col-sm-6 col-1"></div>
+                    <div class="col-sm-6 col-2"></div>
+                </figure>
+            </section>
+            <pre id="result" class="language-javascript"><code class="language-javascript"></code></pre>
+     -->
+<!--      {% if prev != [] %}
+    <h2> Previous Recommendations </h2>
+    <table class="table">
+    <thead>
+      <tr>
+        <th>Beer</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for i in prev %}
+                        <tr>
+                            <td>{{ i }}</td>
+                        </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+ -->
+  {% if favs != [] %}
+  <h2> User Favourites  </h2>
+    <table class="table">
+    <thead>
+      <tr>
+        <th>Beer</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for i in favs %}
+                        <tr>
+                            <td>{{ i }}</td>
+                        </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+
+    {% if arms %}
+    <h2>Recommendation Engine Variables</h2>
+    <table class="table">
+    <thead>
+      <tr>
+        <th>Arm_name</th>
+        <th>Count</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for arm in arms %}
+                        <tr>
+                            <td>{{ arm.name }}</td>
+                            <td>{{ arm.count }}</td>
+                            <td>{{ arm.value }}</td>
+                        </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+</div>
+
+        <script src="{{ jquery_url }}"></script>
+        <script src="{{ highlight_url }}"></script>
+        <script src="{{ beers_url }}"></script>
+    </body>
+</html>

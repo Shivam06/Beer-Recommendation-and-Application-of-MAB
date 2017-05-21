@@ -57,6 +57,42 @@ var recommendation = {
         });
         return false;
     },
+    shivam_ki_zid: function(){
+        var chosen_beer = $("#beers").val();
+        var payload = {
+            beers: chosen_beer,
+            n: 10
+        };
+
+        $.ajax({
+            type: "POST",
+            url: document.location.href.replace('train', 'prev'),
+            data: JSON.stringify(payload),
+            contentType: "application/json",
+            success: function(d) {
+                console.log(d)
+                if (d){
+                    recommendation.reset();
+                $("#result").show().children('code').text(JSON.stringify(d, null, 2));
+                if (d.result.length){
+                    $('.results p').addClass('show');
+                }
+                for (var i=0; i < 5; i++){
+                    var $this_beer = $('.col-1 .beer:nth-child('+(i+1)+')');
+                    $this_beer.find('.name').html(d.result[i].beer);
+                    $this_beer.addClass('show');
+                }
+                for (var i=5; i < 10; i++){
+                    var $this_beer = $('.col-2 .beer:nth-child('+(i-4)+')');
+                    $this_beer.find('.name').html(d.result[i].beer);
+                    $this_beer.addClass('show');
+                }
+                Prism.highlightAll();
+                }
+            }
+        });
+        return false;
+    },
     reset: function(){
         $('.results p').removeClass('show');
         $('.beer').removeClass('show');
@@ -66,4 +102,5 @@ var recommendation = {
 
 $(document).ready(function(){
     recommendation.init();
+    recommendation.shivam_ki_zid()
 });

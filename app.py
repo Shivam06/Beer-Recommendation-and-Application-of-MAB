@@ -44,15 +44,16 @@ class UserList():
 userlist = UserList()
 
 class person:
-	def __init__(self):
-		self.arr = []
-		self.favs = []
-		self.flag = 0
+    def __init__(self):
+        self.arr = []
+        self.favs = []
+        self.flag = 0
+        self.prev_recommendations = 0
 
 chosen_arm = 0
 
-@app.route('/user/<username>', methods=['GET', 'POST'])
-def index(username):
+@app.route('/user/<username>/train', methods=['GET', 'POST'])
+def train_user(username):
     if request.method == 'POST':
         user = userlist.users[username]
         css_url = url_for('static', filename='combined.css')
@@ -101,6 +102,7 @@ def index(username):
         a['result']=beers
         # import pdb
         # pdb.set_trace()
+        user.prev_recommendations = a
         return jsonify(a)
     else:
         if username not in userlist.users.keys():
@@ -111,14 +113,43 @@ def index(username):
         beers_url = url_for('static', filename='js/beers.js')
         highlight_url = url_for('static', filename='js/code.js')
         js_url = url_for('static', filename='js/main.js')
-        if user.flag == 0:
-            return render_template('index.html', css_url=css_url,
-                               jquery_url=jquery_url, beers_url=beers_url,
-                               js_url=js_url, highlight_url=highlight_url)
-        else:
-            return render_template('index.html', css_url=css_url,
-                               jquery_url=jquery_url, beers_url=beers_url,
-                               js_url=js_url, highlight_url=highlight_url)
+        train_url = request.url
+        user_url = request.url.replace('/train','')
+        # if user.flag == 0:
+        return render_template('index.html', css_url=css_url,
+            jquery_url=jquery_url, beers_url=beers_url,
+            js_url=js_url, highlight_url=highlight_url, train_url=train_url, user_url=user_url)
+        # else:
+        #     return render_template('index.html', css_url=css_url,
+        #                        jquery_url=jquery_url, beers_url=beers_url,
+        #                        js_url=js_url, highlight_url=highlight_url, arms=arms, prev=user.prev_recommendations)
+
+@app.route('/user/<username>', methods=['GET', 'POST'])
+def user_data(username):
+    if username not in userlist.users.keys():
+        userlist.users[username] = person()
+    user = userlist.users[username]
+    css_url = url_for('static', filename='css/main.css')
+    jquery_url = url_for('static', filename='js/jquery-1.10.2.min.js')
+    beers_url = url_for('static', filename='js/beers.js')
+    highlight_url = url_for('static', filename='js/code.js')
+    js_url = url_for('static', filename='js/main.js')
+    img_url = url_for('static', filename='img/beer.svg')
+    train_url = request.url+'/train'
+    user_url = request.url
+        # if user.flag == 0:
+        #     return render_template('index.html', css_url=css_url,
+        #                        jquery_url=jquery_url, beers_url=beers_url,
+        #                        js_url=js_url, highlight_url=highlight_url)
+        # else:
+    return render_template('user.html', css_url=css_url,
+        jquery_url=jquery_url, beers_url=beers_url,
+        highlight_url=highlight_url, arms=arms, prev=user.prev_recommendations, favs=user.favs, img_url = img_url, train_url=train_url, user_url=user_url)
+
+@app.route('/user/<username>/prev', methods=['POST'])
+def user_prev(username):
+    user = userlist.users[username]
+    return jsonify(user.prev_recommendations)
 
 if __name__ == '__main__':
     app.run(debug=True)
