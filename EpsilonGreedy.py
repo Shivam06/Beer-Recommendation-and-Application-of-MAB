@@ -5,7 +5,7 @@ import os
 filedir = os.path.dirname(os.path.realpath('__file__'))+'/Data/'
 
 
-with open(filedir+'beer_profile_hash.pickle', "rb") as handle:
+with open(repr(filedir)+'beer_profile_hash.pickle', "rb") as handle:
 	hash_beers = pickle.load(handle)
 	hash_profiles = pickle.load(handle)
 	hash_beers_inv = pickle.load(handle)

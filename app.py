@@ -22,7 +22,7 @@ def display_arm(idx):
 
 def find_rank(arr, input):
 	for i in range(len(arr)):
-		if arr[i] == input:
+		if arr[i] == str(input):
 			return i+1
 	return 0
 
@@ -31,7 +31,6 @@ algo.initialize(3)
 arms = [JacArm(), CossineArm(), KNNarm()]
 arr = []
 favs = []
-# chosen_arm = 0
 
 
 
@@ -50,10 +49,10 @@ class person:
 		self.favs = []
 		self.flag = 0
 
+chosen_arm = 0
 
 @app.route('/user/<username>', methods=['GET', 'POST'])
 def index(username):
-    chosen_arm = 0
     if request.method == 'POST':
         user = userlist.users[username]
         css_url = url_for('static', filename='combined.css')
@@ -67,13 +66,16 @@ def index(username):
             if i not in user.favs:
                 user.favs.append(i)
                 beer = i
+
+        chosen_arm = algo.select_arm()
+
         if user.flag == 0:
-            chosen_arm = algo.select_arm()
             try:
                 user.arr = arms[chosen_arm].recommend(user.favs, 10)
             except:
                 return "No such Beer Available."
             user.flag = 1
+
         else:
             # chosen_arm = 0
             rank = find_rank(user.arr, beer) # Define the function
