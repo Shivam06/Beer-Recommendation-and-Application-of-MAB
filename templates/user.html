@@ -40,43 +40,12 @@ li.nav a:hover {
 <ul class="nav">
   <ul class= "nav" class="container">
   <li class="nav"><a class="active" href="{{train_url}}">Train</a></li>
-  <li class="nav"><a class="active" href="{{user_url}}">User Data</a></li>
+  <li class="nav"><a class="active" href="{{user_url}}">{{name}} Data</a></li>
   </ul>
 
 </ul>
         <div class="container" style="width: 60%">
-<!--             <form id="rec">
-                <select id="beers" data-placeholder="Choose some beers..." class="chosen-select" multiple>
-                </select>
-                <button class="btn" onsubmit="recommendation.submit()">Go!</button>
-            </form>
-            <section class="results">
-                <p class="lead">Top Ten Recommended Beers</p>
-                <figure class="visualization row">
-                    <div class="col-sm-6 col-1"></div>
-                    <div class="col-sm-6 col-2"></div>
-                </figure>
-            </section>
-            <pre id="result" class="language-javascript"><code class="language-javascript"></code></pre>
-     -->
-<!--      {% if prev != [] %}
-    <h2> Previous Recommendations </h2>
-    <table class="table">
-    <thead>
-      <tr>
-        <th>Beer</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for i in prev %}
-                        <tr>
-                            <td>{{ i }}</td>
-                        </tr>
-    {% endfor %}
-    </tbody>
-  </table>
-  {% endif %}
- -->
+
   {% if favs != [] %}
   <h2> User Favourites  </h2>
     <table class="table">
@@ -97,7 +66,7 @@ li.nav a:hover {
 
 
     {% if arms %}
-    <h2>Recommendation Engine Variables</h2>
+    <h2>Epsilon Greedy Algo Information</h2>
     <table class="table">
     <thead>
       <tr>

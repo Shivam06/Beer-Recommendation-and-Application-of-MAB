@@ -29,6 +29,7 @@ def find_rank(arr, input):
 algo = EpsilonGreedy([], [], 0.2)
 algo.initialize(3)
 arms = [JacArm(), CossineArm(), KNNarm()]
+arms_name = [ 'Jaccardian','Cossine', 'KNN'  ]
 arr = []
 favs = []
 
@@ -50,7 +51,11 @@ class person:
         self.flag = 0
         self.prev_recommendations = 0
 
-chosen_arm = 0
+class Data:
+    def __init__(self):
+        self.chosen_arm = 0
+
+data = Data()
 
 @app.route('/user/<username>/train', methods=['GET', 'POST'])
 def train_user(username):
@@ -68,11 +73,11 @@ def train_user(username):
                 user.favs.append(i)
                 beer = i
 
-        chosen_arm = algo.select_arm()
+        data.chosen_arm = algo.select_arm()
 
         if user.flag == 0:
             try:
-                user.arr = arms[chosen_arm].recommend(user.favs, 10)
+                user.arr = arms[data.chosen_arm].recommend(user.favs, 10)
             except:
                 return "No such Beer Available."
             user.flag = 1
@@ -81,15 +86,15 @@ def train_user(username):
             # chosen_arm = 0
             rank = find_rank(user.arr, beer) # Define the function
             if rank:
-                score = arms[chosen_arm].draw(rank)
+                score = arms[data.chosen_arm].draw(rank)
             else:
                 score = 0
-            algo.update(chosen_arm, score)
-            arms[chosen_arm].count = algo.counts[chosen_arm]
-            arms[chosen_arm].value = algo.values[chosen_arm]
-            chosen_arm = algo.select_arm()
+            algo.update(data.chosen_arm, score)
+            arms[data.chosen_arm].count = algo.counts[data.chosen_arm]
+            arms[data.chosen_arm].value = algo.values[data.chosen_arm]
+            data.chosen_arm = algo.select_arm()
             try:
-                user.arr = arms[chosen_arm].recommend(user.favs, 10)
+                user.arr = arms[data.chosen_arm].recommend(user.favs, 10)
             except:
                 return "No such Beer Available."
         a= {}
@@ -115,10 +120,11 @@ def train_user(username):
         js_url = url_for('static', filename='js/main.js')
         train_url = request.url
         user_url = request.url.replace('/train','')
+        engine=arms_name[data.chosen_arm]
         # if user.flag == 0:
         return render_template('index.html', css_url=css_url,
             jquery_url=jquery_url, beers_url=beers_url,
-            js_url=js_url, highlight_url=highlight_url, train_url=train_url, user_url=user_url)
+            js_url=js_url, highlight_url=highlight_url, train_url=train_url, user_url=user_url,name=username,engine=engine)
         # else:
         #     return render_template('index.html', css_url=css_url,
         #                        jquery_url=jquery_url, beers_url=beers_url,
@@ -137,6 +143,7 @@ def user_data(username):
     img_url = url_for('static', filename='img/beer.svg')
     train_url = request.url+'/train'
     user_url = request.url
+    engine=arms_name[data.chosen_arm]
         # if user.flag == 0:
         #     return render_template('index.html', css_url=css_url,
         #                        jquery_url=jquery_url, beers_url=beers_url,
@@ -144,7 +151,7 @@ def user_data(username):
         # else:
     return render_template('user.html', css_url=css_url,
         jquery_url=jquery_url, beers_url=beers_url,
-        highlight_url=highlight_url, arms=arms, prev=user.prev_recommendations, favs=user.favs, img_url = img_url, train_url=train_url, user_url=user_url)
+        highlight_url=highlight_url, arms=arms, engine=engine ,prev=user.prev_recommendations, favs=user.favs, img_url = img_url, train_url=train_url, user_url=user_url,name=username)
 
 @app.route('/user/<username>/prev', methods=['POST'])
 def user_prev(username):

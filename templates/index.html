@@ -35,7 +35,7 @@ li.nav a:hover {
 <ul class="nav">
   <ul class= "nav" class="container">
   <li class="nav"><a class="active" href="{{train_url}}">Train</a></li>
-  <li class="nav"><a class="active" href="{{user_url}}">User Data</a></li>
+  <li class="nav"><a class="active" href="{{user_url}}">{{name}} Data</a></li>
   </ul>
 
 </ul>
@@ -46,7 +46,7 @@ li.nav a:hover {
                 <button class="btn" onsubmit="recommendation.submit()">Go!</button>
             </form>
             <section class="results">
-                <p class="lead">Top Ten Recommended Beers</p>
+                <p class="lead">Top Ten Recommendations for {{name}} corresponding to {{engine}} arm are :</p>
                 <figure class="visualization row">
                     <div class="col-sm-6 col-1"></div>
                     <div class="col-sm-6 col-2"></div>
